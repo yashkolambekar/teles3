@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: backend
+    environment:
+      BOT_TOKEN: ${BOT_TOKEN}
+      CHAT_ID: ${CHAT_ID}
+      TELES3_FILEID_LENGTH: ${TELES3_FILEID_LENGTH}
+    ports:
+      - "9275:80"
+    restart: always
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        # VITE_BACKEND_API should be something like https://backend.example.com
+        # It should include https:// or http:// and no trailing backslash '/' at the end 
+        VITE_BACKEND_API: ${VITE_BACKEND_API}
+    container_name: frontend
+    ports:
+      - "9274:80"
+    depends_on:
+      - backend
+    restart: always
