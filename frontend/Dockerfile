@@ -13,7 +13,7 @@ RUN chmod +x ./exportenv.sh
 # Export the Args to .env file
 RUN ./exportenv.sh
 
-RUN npm install
+RUN npm install --force
 
 RUN npm i -g serve
 
