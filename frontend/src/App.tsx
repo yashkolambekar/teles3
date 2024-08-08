@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom"
 import Home from "./components/Home/Home"
 import Download from "./components/Download/Download"
-import PrivacyPolicy from "./PrivacyPolicy/PrivacyPolicy"
+import PrivacyPolicy from "./components/PrivacyPolicy/PrivacyPolicy"
 
 function App() {
 

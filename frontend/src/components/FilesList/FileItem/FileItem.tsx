@@ -5,7 +5,7 @@ import errorIcon from "../../../assets/error.svg";
 
 const FileItem = ({triggerAlert, filename, fileId, status} : any) => {
 
-  const url = `http://${window.location.host}/file/${fileId}`;
+  const url = `http://${window.location.host}/${fileId}`;
 
   const copyLink = () => {
     if(status == "success"){
