@@ -1,40 +1,24 @@
-# Use the official PHP image with Apache
-FROM php:8.3-apache
+FROM node:18-alpine
 
-# Install Node.js and npm
-RUN apt-get update && \
-    apt-get install -y nodejs npm neovim && \
-    apt-get clean
-
-# Set the working directory
 WORKDIR /app
-
-# Copy the application files to the working directory
-COPY . .
 
 #ARGS
 ARG VITE_BACKEND_API
 
+COPY . .
+
 # Ensure the entrypoint script is executable
-RUN chmod +x ./entrypoint.sh
+RUN chmod +x ./exportenv.sh
 
 # Export the Args to .env file
-RUN ./entrypoint.sh
+RUN ./exportenv.sh
 
-# Run the build process
-RUN npm install && npm run build
+RUN npm install
 
-# Remove default Nginx static files and move the built files
-RUN rm -rf /var/www/html/* && \
-    mv ./dist/* /var/www/html/
+RUN npm i -g serve
 
-# Change ownership of the files
-RUN chown -R www-data:www-data /var/www/html
+RUN npm run build
 
-RUN a2enmod rewrite
+EXPOSE 3000
 
-# Expose port 80
-EXPOSE 80
-
-# Start Apache server
-CMD ["apache2-foreground"]
+CMD [ "serve", "-s", "dist" ]

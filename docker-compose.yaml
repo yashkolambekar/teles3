@@ -22,7 +22,7 @@ services:
         VITE_BACKEND_API: ${VITE_BACKEND_API}
     container_name: frontend
     ports:
-      - "9274:80"
+      - "9274:3000"
     depends_on:
       - backend
     restart: always
