@@ -27,7 +27,7 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN touch /var/www/html/database/database.sqlite
 
 # Install Laravel dependencies
-RUN composer update
+RUN composer install
 
 # Change ownership of the files
 RUN chown -R www-data:www-data /var/www/html
@@ -38,7 +38,7 @@ RUN mv .env.example .env
 
 RUN php artisan key:generate
 
-RUN php artisan migrate
+RUN php artisan migrate --force
 
 # Expose port 80
 EXPOSE 80
