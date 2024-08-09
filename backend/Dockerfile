@@ -11,10 +11,12 @@ git \
 curl \
 zip \
 unzip \
-neovim
+neovim 
 
 # Install PHP extensions
 RUN docker-php-ext-install pdo pdo_mysql
+
+# RUN apt install 
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -24,7 +26,7 @@ COPY . .
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
-RUN touch /var/www/html/database/database.sqlite
+# RUN touch /var/www/html/database/database.sqlite
 
 # Install Laravel dependencies
 RUN composer install
@@ -37,6 +39,12 @@ RUN a2enmod rewrite
 RUN mv .env.example .env
 
 RUN php artisan key:generate
+
+ARG DB_HOST
+ARG DB_PORT
+ARG DB_DATABASE
+ARG DB_USERNAME
+ARG DB_PASSWORD
 
 RUN php artisan migrate --force
 
